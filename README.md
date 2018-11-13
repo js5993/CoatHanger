@@ -10,14 +10,10 @@ based on the predicted weather of the day.
 In the morning, a notification will arrive to the users phone with a weather report
 and the clothing recommendation that is suitable for whatever weather was suggested.
 
-The original weather API provider was to be the Weather Underground API, but the
-free service from that API was discontinued earlier this year.
+It is expected that this app will use the Yahoo! Weather API.
 
-Now the direction has changed to using the Yahoo! Weather API. 
-
-The recommendation will draw on factors like the temperature, humidity, likelihood of rain,
-cloudiness, and windiness. Perhaps even non-weather factors such as elevation could be
-incorporated to give the best possible recommendation for the user.
+The recommendation will rely on factors such as the temperature, humidity, raininess, cloudiness, and windiness.
+In time, factors such as elevation could be incorporated for even better recommendation.
 
 I hope that this app will help people not make a fuss in the morning thinking about how
 they will have to prepare for the weather for the day ahead. Instead, the appropriate 
