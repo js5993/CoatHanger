@@ -15,10 +15,7 @@ It is expected that this app will use the Yahoo! Weather API.
 The recommendation will rely on factors such as the temperature, humidity, raininess, cloudiness, and windiness.
 In time, factors such as elevation could be incorporated for even better recommendation.
 
-I hope that this app will help people not make a fuss in the morning thinking about how
-they will have to prepare for the weather for the day ahead. Instead, the appropriate 
-clothing selection will be provided to them, and all they would have to do would be wearing
-the clothing selection without wasting valuable time in the morning.
+This app will help its users save valuable time in the morning by saving them the trouble of having to figure out the appropriate clothing for the weather.
 
 Possible monetization options could include ads for the clothing items in the clothing selection.
 For example, if there is an item in the clothing suggestion that you don't have, perhaps there could 
