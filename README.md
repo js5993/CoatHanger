@@ -12,9 +12,8 @@ and the clothing recommendation that is suitable for whatever weather was sugges
 
 It is expected that this app will use the Yahoo! Weather API.
 
-The recommendation will draw on factors like the temperature, humidity, likelihood of rain,
-cloudiness, and windiness. Perhaps even non-weather factors such as elevation could be
-incorporated to give the best possible recommendation for the user.
+The recommendation will rely on factors such as the temperature, humidity, raininess, cloudiness, and windiness.
+In time, factors such as elevation could be incorporated for even better recommendation.
 
 I hope that this app will help people not make a fuss in the morning thinking about how
 they will have to prepare for the weather for the day ahead. Instead, the appropriate 
