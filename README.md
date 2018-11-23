@@ -10,7 +10,7 @@ based on the predicted weather of the day.
 In the morning, a notification will arrive to the users phone with a weather report
 and the clothing recommendation that is suitable for whatever weather was suggested.
 
-It is expected that this app will use the Yahoo! Weather API.
+The app will use the OpenWeatherMap API.
 
 The recommendation will rely on factors such as the temperature, humidity, raininess, cloudiness, and windiness.
 In time, factors such as elevation could be incorporated for even better recommendation.
