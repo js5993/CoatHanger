@@ -10,44 +10,94 @@ import org.json.JSONObject;
 
 public class Recommendation {
 
-    public int temperature; //score from 0 to 5 -> 0 for coldest and 5 for warmest
-    public int raininess; // binary 0 or 1 or 2 -> 0 if no prospect of rain, 1 if moderate, 2 if near certainty of rain
-    public int windiness; // ok for now, let's say 0 to 5
-    public JSONArray recommendation; // the JSON array containing the recommendation
+    public double temperature; //score from 0 to 5 -> 0 for coldest and 5 for warmest
+    //public int raininess; // binary 0 or 1 or 2 -> 0 if no prospect of rain, 1 if moderate, 2 if near certainty of rain
+    //public int windiness; // ok for now, let's say 0 to 5
 
+    public JSONObject recommendation = new JSONObject(); // the JSON object containing the recommendation
 
-    Recommendation(int temperature, int raininess, int windiness) {
-        this.temperature = temperature;
-        this.raininess = raininess;
-        this.windiness = windiness;
+    Recommendation() {
+        //this.temperature = temperature;
+        //this.raininess = raininess;
+        //this.windiness = windiness;
     }
 
-    String[] jackets = {"heavy coat", "light coat"};
+    String[] jackets = {"heavy jacket", "light jacket"};
     String[] pants = {"heavy pants", "light pants"};
-    String[] shoes = {"heavy shes", "heavy pants"};
+    String[] shoes = {"heavy shoes", "light shoes"};
     String[] shirts = {"heavy shirts", "light shirts"};
     String[] hats = {"heavy hat", "light hat"};
 
     // you put JSON Objects into a JSON Array
 
-    public JSONObject getRecommendation() throws JSONException {
+    public JSONObject setRecommendation() throws JSONException {
 
-        JSONObject jsonObject = new JSONObject();
+        if (0 <= this.temperature && this.temperature <= 10) {
+            recommendation.put("jacket",jackets[0]);
+            recommendation.put("pant",pants[0]);
+            recommendation.put("shoe",shoes[0]);
+            recommendation.put("shirt",shirts[0]);
+            recommendation.put("hat",hats[0]);
+        }
 
-        if (this.temperature == 0 || this.raininess == 0 || this.windiness == 0) {
-            jsonObject.put("jacket",jackets[0]);
-            jsonObject.put("pants",pants[0]);
-            jsonObject.put("shoes",shoes[0]);
-            jsonObject.put("shirts",shirts[0]);
-            jsonObject.put("hats",hats[0]);
-
+        else if (this.temperature > 10) {
+            recommendation.put("jacket",jackets[1]);
+            recommendation.put("pant",pants[1]);
+            recommendation.put("shoe",shoes[1]);
+            recommendation.put("shirt",shirts[1]);
+            recommendation.put("hat",hats[1]);
         }
 
         // other conditionals come here ...
 
-        return jsonObject;
+        return recommendation;
     }
 
+    public double getTemperature() {
+        return temperature;
+    }
 
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
 
+    public String[] getJackets() {
+        return jackets;
+    }
+
+    public void setJackets(String[] jackets) {
+        this.jackets = jackets;
+    }
+
+    public String[] getPants() {
+        return pants;
+    }
+
+    public void setPants(String[] pants) {
+        this.pants = pants;
+    }
+
+    public String[] getShoes() {
+        return shoes;
+    }
+
+    public void setShoes(String[] shoes) {
+        this.shoes = shoes;
+    }
+
+    public String[] getShirts() {
+        return shirts;
+    }
+
+    public void setShirts(String[] shirts) {
+        this.shirts = shirts;
+    }
+
+    public String[] getHats() {
+        return hats;
+    }
+
+    public void setHats(String[] hats) {
+        this.hats = hats;
+    }
 }
