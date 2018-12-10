@@ -1,5 +1,7 @@
 package com.example.junhosung.coathanger;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     Recommendation recommendation;
-    String apiKey = "aaf609fc3d376d2a8b80e53754b890ac";
+    //String apiKey = "aaf609fc3d376d2a8b80e53754b890ac";
     JSONObject localRecommendation;
 
     TextView jacketRecommend;
@@ -41,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         shirtRecommend = (TextView) findViewById(R.id.shirtRecommend);
         pantRecommend = (TextView) findViewById(R.id.pantRecommend);
         temperatureText = (TextView) findViewById(R.id.temperatureText);
+
+        //Intent i = PollService.newIntent(MainActivity.this);
+        //MainActivity.this.startService(i);
+
+        PollService.setServiceAlarm(MainActivity.this,true);
 
         find_weather();
 
@@ -87,5 +94,9 @@ public class MainActivity extends AppCompatActivity {
         );
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(jsonObjectRequest);
+    }
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 }
