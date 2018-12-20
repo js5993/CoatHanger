@@ -1,4 +1,4 @@
-package com.example.junhosung.coathanger;
+package com.example.junhosung.coathanger.models;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +16,7 @@ public class Recommendation {
 
     public JSONObject recommendation = new JSONObject(); // the JSON object containing the recommendation
 
-    Recommendation() {
+    public Recommendation() {
         //this.temperature = temperature;
         //this.raininess = raininess;
         //this.windiness = windiness;

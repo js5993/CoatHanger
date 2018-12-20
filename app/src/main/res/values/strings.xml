@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoatHanger</string>
+    <string name="title_activity_welcome_screen">WelcomeScreenActivity</string>
 </resources>

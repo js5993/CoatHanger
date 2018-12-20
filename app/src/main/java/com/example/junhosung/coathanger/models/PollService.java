@@ -1,4 +1,4 @@
-package com.example.junhosung.coathanger;
+package com.example.junhosung.coathanger.models;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -12,9 +12,8 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
-import static android.content.ContentValues.TAG;
+import com.example.junhosung.coathanger.views.activities.LobbyActivity;
 
 /**
  * Created by Junho Sung on 12/9/2018.
@@ -43,25 +42,23 @@ public class PollService extends IntentService {
         }
 
         Resources resources = getResources();
-        Intent intent1 = MainActivity.newIntent(this);
-        PendingIntent pendingIntent  = PendingIntent.getActivity(this, 0,intent1,0);
+        //Intent intent1 = LobbyActivity.newIntent(this);
+        //PendingIntent pendingIntent  = PendingIntent.getActivity(this, 0,intent1,0);
 
-        Notification notification = new NotificationCompat.Builder(this)
-                .setTicker("harro")
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                .setContentTitle("harro2")
-                .setContentText("harro3")
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
+        //Notification notification = new NotificationCompat.Builder(this)
+                //.setTicker("harro")
+                //.setSmallIcon(android.R.drawable.ic_menu_report_image)
+                //.setContentTitle("harro2")
+                //.setContentText("harro3")
+                ///.setContentIntent(pendingIntent)
+                //.setAutoCancel(true)
+                //.build();
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0,notification);
+        //notificationManager.notify(0,notification);
 
 
         //Log.i(TAG, "Received an intent: " + intent);
-
-
 
     }
 

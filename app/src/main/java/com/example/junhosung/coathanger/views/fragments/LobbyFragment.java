@@ -1,11 +1,14 @@
-package com.example.junhosung.coathanger;
+package com.example.junhosung.coathanger.views.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,13 +16,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.junhosung.coathanger.R;
+import com.example.junhosung.coathanger.models.PollService;
+import com.example.junhosung.coathanger.models.Recommendation;
+import com.example.junhosung.coathanger.views.activities.LobbyActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by Junho Sung on 12/20/2018.
+ */
+
+public class LobbyFragment extends Fragment {
 
     Recommendation recommendation;
     //String apiKey = "aaf609fc3d376d2a8b80e53754b890ac";
@@ -30,27 +39,34 @@ public class MainActivity extends AppCompatActivity {
     TextView pantRecommend;
     TextView temperatureText;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_lobby,container,false);
 
         localRecommendation = new JSONObject();
         recommendation = new Recommendation();
 
-        jacketRecommend = (TextView) findViewById(R.id.jacketRecommend);
-        shirtRecommend = (TextView) findViewById(R.id.shirtRecommend);
-        pantRecommend = (TextView) findViewById(R.id.pantRecommend);
-        temperatureText = (TextView) findViewById(R.id.temperatureText);
+        jacketRecommend = (TextView) view.findViewById(R.id.jacketRecommend);
+        shirtRecommend = (TextView) view.findViewById(R.id.shirtRecommend);
+        pantRecommend = (TextView) view.findViewById(R.id.pantRecommend);
+        temperatureText = (TextView) view.findViewById(R.id.temperatureText);
 
-        //Intent i = PollService.newIntent(MainActivity.this);
-        //MainActivity.this.startService(i);
+        //Intent intent = PollService.newIntent(LobbyActivity.this);
+        //LobbyActivity.this.startService(intent);
 
-        PollService.setServiceAlarm(MainActivity.this,true);
+        //PollService.setServiceAlarm(LobbyActivity.this,true);
 
-        find_weather();
 
+        find_weather();;
+
+        return view;
     }
 
     public void find_weather() {
@@ -67,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                     Double temperature = mainObject.getDouble("temp");
                     //String description = object.getString("description");
                     //String city = response.getString("name");
-                    //Toast.makeText(MainActivity.this,"  " + temperature,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LobbyActivity.this,"  " + temperature,Toast.LENGTH_LONG).show();
                     recommendation.setTemperature(temperature);
-                    //Toast.makeText(MainActivity.this,"  " + recommendation.temperature,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LobbyActivity.this,"  " + recommendation.temperature,Toast.LENGTH_LONG).show();
 
                     //recommendation.setTemperature(20.0);
 
@@ -92,11 +108,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         );
-        RequestQueue queue = Volley.newRequestQueue(this);
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(jsonObjectRequest);
     }
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+        return new Intent(context, LobbyActivity.class);
     }
+
+
+
 }
