@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.example.junhosung.coathanger.R;
 import com.example.junhosung.coathanger.models.PollService;
 import com.example.junhosung.coathanger.models.Recommendation;
 import com.example.junhosung.coathanger.views.activities.LobbyActivity;
+import com.example.junhosung.coathanger.views.activities.RecommendationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +40,7 @@ public class LobbyFragment extends Fragment {
     TextView shirtRecommend;
     TextView pantRecommend;
     TextView temperatureText;
+    Button btnSeeOutfit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,16 +49,16 @@ public class LobbyFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_lobby,container,false);
 
         localRecommendation = new JSONObject();
         recommendation = new Recommendation();
 
-        jacketRecommend = (TextView) view.findViewById(R.id.jacketRecommend);
-        shirtRecommend = (TextView) view.findViewById(R.id.shirtRecommend);
-        pantRecommend = (TextView) view.findViewById(R.id.pantRecommend);
+        //jacketRecommend = (TextView) view.findViewById(R.id.jacketRecommend);
+        //shirtRecommend = (TextView) view.findViewById(R.id.shirtRecommend);
+        //pantRecommend = (TextView) view.findViewById(R.id.pantRecommend);
         temperatureText = (TextView) view.findViewById(R.id.temperatureText);
 
         //Intent intent = PollService.newIntent(LobbyActivity.this);
@@ -63,8 +66,16 @@ public class LobbyFragment extends Fragment {
 
         //PollService.setServiceAlarm(LobbyActivity.this,true);
 
+        btnSeeOutfit = (Button) view.findViewById(R.id.btnSeeOutfit);
+        btnSeeOutfit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),RecommendationActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        find_weather();;
+        find_weather();
 
         return view;
     }
@@ -91,9 +102,9 @@ public class LobbyFragment extends Fragment {
 
                     localRecommendation = recommendation.setRecommendation();
 
-                    jacketRecommend.setText(localRecommendation.getString("jacket"));
-                    shirtRecommend.setText(localRecommendation.getString("shirt"));
-                    pantRecommend.setText(localRecommendation.getString("pant"));
+                    //jacketRecommend.setText(localRecommendation.getString("jacket"));
+                    //shirtRecommend.setText(localRecommendation.getString("shirt"));
+                    //pantRecommend.setText(localRecommendation.getString("pant"));
                     temperatureText.setText(String.valueOf(recommendation.temperature));
 
                 } catch (JSONException e) {

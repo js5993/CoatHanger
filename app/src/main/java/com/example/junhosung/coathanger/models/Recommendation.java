@@ -1,6 +1,5 @@
 package com.example.junhosung.coathanger.models;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,29 +21,30 @@ public class Recommendation {
         //this.windiness = windiness;
     }
 
-    String[] jackets = {"heavy jacket", "light jacket"};
-    String[] pants = {"heavy pants", "light pants"};
-    String[] shoes = {"heavy shoes", "light shoes"};
-    String[] shirts = {"heavy shirts", "light shirts"};
-    String[] hats = {"heavy hat", "light hat"};
+    String[] outerware = {"windbreaker", "harrington jacket","trench coat", "sport coat", "jacket", "blazer","duffel coat"};
+    String[] pants = {"jeans", "sweatpants","shorts"};
+    String[] shoes = {"boot", "light shoes"};
+    String[] tops = {"blouse", "hoodie","polo","sweater","polo","turtleneck","t-shirt","tube top","crop top"};
+    String[] hats = {"baseball cap", "knit cap", "flat cap"};
+    String[] accessories = {"scarf","sunglasses","umbrella"};
 
     // you put JSON Objects into a JSON Array
 
     public JSONObject setRecommendation() throws JSONException {
 
         if (0 <= this.temperature && this.temperature <= 10) {
-            recommendation.put("jacket",jackets[0]);
+            recommendation.put("jacket", outerware[0]);
             recommendation.put("pant",pants[0]);
             recommendation.put("shoe",shoes[0]);
-            recommendation.put("shirt",shirts[0]);
+            recommendation.put("shirt", tops[0]);
             recommendation.put("hat",hats[0]);
         }
 
         else if (this.temperature > 10) {
-            recommendation.put("jacket",jackets[1]);
+            recommendation.put("jacket", outerware[1]);
             recommendation.put("pant",pants[1]);
             recommendation.put("shoe",shoes[1]);
-            recommendation.put("shirt",shirts[1]);
+            recommendation.put("shirt", tops[1]);
             recommendation.put("hat",hats[1]);
         }
 
@@ -61,12 +61,12 @@ public class Recommendation {
         this.temperature = temperature;
     }
 
-    public String[] getJackets() {
-        return jackets;
+    public String[] getOuterware() {
+        return outerware;
     }
 
-    public void setJackets(String[] jackets) {
-        this.jackets = jackets;
+    public void setOuterware(String[] outerware) {
+        this.outerware = outerware;
     }
 
     public String[] getPants() {
@@ -85,12 +85,12 @@ public class Recommendation {
         this.shoes = shoes;
     }
 
-    public String[] getShirts() {
-        return shirts;
+    public String[] getTops() {
+        return tops;
     }
 
-    public void setShirts(String[] shirts) {
-        this.shirts = shirts;
+    public void setTops(String[] tops) {
+        this.tops = tops;
     }
 
     public String[] getHats() {

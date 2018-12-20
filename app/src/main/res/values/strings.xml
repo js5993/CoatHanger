@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">CoatHanger</string>
     <string name="title_activity_welcome_screen">WelcomeScreenActivity</string>
+    <string name="button_recommendation">See Today\'s Outfit!</string>
+    <string name="powered_by">Powered by OpenWeatherMap</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
 </resources>
