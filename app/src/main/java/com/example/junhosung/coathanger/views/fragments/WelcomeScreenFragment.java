@@ -18,7 +18,7 @@ import com.example.junhosung.coathanger.views.activities.LobbyActivity;
 
 public class WelcomeScreenFragment extends Fragment {
 
-    private static int displayTime = 4000; // 4 seconds
+    private static int displayTime = 2000; // 4 seconds
     private Handler handler = new Handler();
 
     @Override
@@ -37,6 +37,7 @@ public class WelcomeScreenFragment extends Fragment {
             public void run() {
                 Intent intent = new Intent(getActivity(),LobbyActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         },displayTime);
 

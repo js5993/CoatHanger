@@ -21,12 +21,12 @@ public class Recommendation {
         //this.windiness = windiness;
     }
 
-    String[] outerware = {"windbreaker", "harrington jacket","trench coat", "sport coat", "jacket", "blazer","duffel coat"};
-    String[] pants = {"jeans", "sweatpants","shorts"};
-    String[] shoes = {"boot", "light shoes"};
-    String[] tops = {"blouse", "hoodie","polo","sweater","polo","turtleneck","t-shirt","tube top","crop top"};
-    String[] hats = {"baseball cap", "knit cap", "flat cap"};
-    String[] accessories = {"scarf","sunglasses","umbrella"};
+    public String[] outerware = {"windbreaker", "harrington jacket","trench coat", "sport coat", "jacket", "blazer","duffel coat"};
+    public String[] pants = {"jeans", "sweatpants","shorts"};
+    public String[] shoes = {"boot", "sneakers"};
+    public String[] tops = {"blouse", "hoodie","polo","sweater","polo","turtleneck","t-shirt","tube top","crop top"};
+    public String[] hats = {"baseball cap", "knit cap", "flat cap"};
+    public String[] accessories = {"scarf","sunglasses","umbrella"};
 
     // you put JSON Objects into a JSON Array
 
