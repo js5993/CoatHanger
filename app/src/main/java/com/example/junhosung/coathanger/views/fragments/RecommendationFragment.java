@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.junhosung.coathanger.R;
 import com.example.junhosung.coathanger.models.PagerAdapter;
+import com.example.junhosung.coathanger.models.Recommendation;
 
 /**
  * Created by Junho Sung on 12/20/2018.

@@ -1,5 +1,7 @@
 package com.example.junhosung.coathanger.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,48 +11,338 @@ import org.json.JSONObject;
 
 public class Recommendation {
 
-    public double temperature; //score from 0 to 5 -> 0 for coldest and 5 for warmest
-    //public int raininess; // binary 0 or 1 or 2 -> 0 if no prospect of rain, 1 if moderate, 2 if near certainty of rain
-    //public int windiness; // ok for now, let's say 0 to 5
-
+    public double temperature;
+    public double rainVolumePastHour;
+    public double windSpeed;
     public JSONObject recommendation = new JSONObject(); // the JSON object containing the recommendation
 
-    public Recommendation() {
-        //this.temperature = temperature;
-        //this.raininess = raininess;
-        //this.windiness = windiness;
+
+    public String hat;
+    public String outerware;
+    public String top;
+    public String pant;
+    public String shoe;
+    public String accessory;
+
+    private static Recommendation instance;
+    public static Recommendation getInstance() {
+        if (instance == null) {
+            instance = new Recommendation();
+        }
+        return instance;
     }
 
-    public String[] outerware = {"windbreaker", "harrington jacket","trench coat", "sport coat", "jacket", "blazer","duffel coat"};
-    public String[] pants = {"jeans", "sweatpants","shorts"};
-    public String[] shoes = {"boot", "sneakers"};
-    public String[] tops = {"blouse", "hoodie","polo","sweater","polo","turtleneck","t-shirt","tube top","crop top"};
-    public String[] hats = {"baseball cap", "knit cap", "flat cap"};
-    public String[] accessories = {"scarf","sunglasses","umbrella"};
+    public Recommendation() {
+        this.hat = hats[hats.length-1];
+        this.outerware = outerwares[outerwares.length-1];
+        this.top = tops[tops.length-1];
+        this.pant = pants[pants.length-1];
+        this.shoe = shoes[shoes.length-1];
+        this.accessory = accessories[accessories.length-1];
+    }
+
+    public String[] outerwares = {"harrington jacket","sport coat", "jacket", "blazer","trench_coat","duffel coat","windbreaker","none"};
+    public String[] pants = {"shorts","khakis","chinos","trousers","jeans", "sweatpants","cargo pants", "none"};
+    public String[] shoes = {"sneakers","canvas shoes","boot"};
+    public String[] tops = {"crop top","tube top","t-shirt","blouse","polo", "hoodie","sweater","turtleneck","none"};
+    public String[] hats = {"baseball cap", "flat cap","knit cap","none"};
+    public String[] accessories = {"umbrella","scarf","sunglasses","none"};
 
     // you put JSON Objects into a JSON Array
 
-    public JSONObject setRecommendation() throws JSONException {
-
-        if (0 <= this.temperature && this.temperature <= 10) {
-            recommendation.put("jacket", outerware[0]);
-            recommendation.put("pant",pants[0]);
-            recommendation.put("shoe",shoes[0]);
-            recommendation.put("shirt", tops[0]);
-            recommendation.put("hat",hats[0]);
+    public void set_outfit_from_weather() {
+        // cold
+        if (this.temperature <= 0.0) {
+            Log.i("WOWWWW","1");
+            // rain but little wind
+            if (rainVolumePastHour > 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and moderate wind
+            else if (rainVolumePastHour > 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and high wind
+            else if (rainVolumePastHour > 0.0 && windSpeed > 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and low wind
+            if (rainVolumePastHour == 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and moderate wind
+            else if (rainVolumePastHour == 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and heavy wind
+            else if (rainVolumePastHour == 0.0 && windSpeed > 12) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
         }
-
-        else if (this.temperature > 10) {
-            recommendation.put("jacket", outerware[1]);
-            recommendation.put("pant",pants[1]);
-            recommendation.put("shoe",shoes[1]);
-            recommendation.put("shirt", tops[1]);
-            recommendation.put("hat",hats[1]);
+        // chilly
+        else if (this.temperature > 0.0 && this.temperature <= 10.0) {
+            Log.i("WOWWWW","2");
+            if (rainVolumePastHour > 0.0 && windSpeed < 6.0) {
+                Log.i("HMMMM","1");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and moderate wind
+            else if (rainVolumePastHour > 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                Log.i("HMMMM","2");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and high wind
+            else if (rainVolumePastHour > 0.0 && windSpeed > 12.0) {
+                Log.i("HMMMM","3");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and low wind
+            else if (rainVolumePastHour == 0.0 && windSpeed < 6.0) {
+                Log.i("HMMMM","4");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and moderate wind
+            else if (rainVolumePastHour == 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                Log.i("HMMMM","5");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and heavy wind
+            else if (rainVolumePastHour == 0 && windSpeed > 12.0) {
+                Log.i("HMMMM","6");
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
         }
-
-        // other conditionals come here ...
-
-        return recommendation;
+        // moderate temperature
+        else if (this.temperature > 10.0 && this.temperature <= 20.0) {
+            Log.i("WOWWWW","3");
+            if (rainVolumePastHour > 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and moderate wind
+            else if (rainVolumePastHour > 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and high wind
+            else if (rainVolumePastHour > 0.0 && windSpeed > 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and low wind
+            else if (rainVolumePastHour == 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and moderate wind
+            else if (rainVolumePastHour == 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and heavy wind
+            else if (rainVolumePastHour < 0.0 && windSpeed > 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+        }
+        // warm
+        else if (this.temperature > 20.0 && this.temperature <= 30.0) {
+            Log.i("WOWWWW","4");
+            if (rainVolumePastHour > 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and moderate wind
+            else if (rainVolumePastHour > 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // rain and high wind
+            else if (rainVolumePastHour > 0.0 && windSpeed > 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and low wind
+            if (rainVolumePastHour == 0.0 && windSpeed < 6.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and moderate wind
+            else if (rainVolumePastHour == 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+            // no rain and heavy wind
+            else if (rainVolumePastHour == 0.0 && windSpeed > 12.0) {
+                this.hat = hats[2];
+                this.outerware = outerwares[4];
+                this.top = tops[3];
+                this.pant = pants[4];
+                this.shoe = shoes[2];
+                this.accessory = accessories[0];
+            }
+        }
+        // hot
+        else if (this.temperature > 30.0) {
+            Log.i("WOWWWW","5");
+            if (rainVolumePastHour > 0 && windSpeed < 6.0) {
+                this.hat = hats[1];
+                this.outerware = outerwares[outerwares.length-1];
+                this.top = tops[2];
+                this.pant = pants[2];
+                this.shoe = shoes[0];
+                this.accessory = accessories[0];
+            }
+            // rain and moderate wind
+            else if (rainVolumePastHour > 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[1];
+                this.outerware = outerwares[5];
+                this.top = tops[2];
+                this.pant = pants[4];
+                this.shoe = shoes[1];
+                this.accessory = accessories[0];
+            }
+            // rain and high wind
+            else if (rainVolumePastHour > 0.0 && windSpeed > 12.0) {
+                this.hat = hats[hats.length-1];
+                this.outerware = outerwares[6];
+                this.top = tops[2];
+                this.pant = pants[5];
+                this.shoe = shoes[1];
+                this.accessory = accessories[accessories.length-1];
+            }
+            // no rain and low wind
+            else if (rainVolumePastHour == 0.0 && windSpeed < 6.0) {
+                this.hat = hats[0];
+                this.outerware = outerwares[3];
+                this.top = tops[2];
+                this.pant = pants[3];
+                this.shoe = shoes[1];
+                this.accessory = accessories[2];
+            }
+            // no rain and moderate wind
+            else if (rainVolumePastHour == 0.0 && windSpeed >= 6.0 && windSpeed < 12.0) {
+                this.hat = hats[0];
+                this.outerware = outerwares[4];
+                this.top = tops[2];
+                this.pant = pants[4];
+                this.shoe = shoes[1];
+                this.accessory = accessories[2];
+            }
+            // no rain and heavy wind
+            else if (rainVolumePastHour == 0.0 && windSpeed > 12.0) {
+                this.hat = hats[0];
+                this.outerware = outerwares[6];
+                this.top = tops[2];
+                this.pant = pants[4];
+                this.shoe = shoes[1];
+                this.accessory = accessories[2];
+            }
+        }
     }
 
     public double getTemperature() {
@@ -61,12 +353,12 @@ public class Recommendation {
         this.temperature = temperature;
     }
 
-    public String[] getOuterware() {
-        return outerware;
+    public String[] getOuterwares() {
+        return outerwares;
     }
 
-    public void setOuterware(String[] outerware) {
-        this.outerware = outerware;
+    public void setOuterwares(String[] outerwares) {
+        this.outerwares = outerwares;
     }
 
     public String[] getPants() {
@@ -99,5 +391,33 @@ public class Recommendation {
 
     public void setHats(String[] hats) {
         this.hats = hats;
+    }
+
+    public double getRainVolumePastHour() {
+        return rainVolumePastHour;
+    }
+
+    public void setRainVolumePastHour(double rainVolumePastHour) {
+        this.rainVolumePastHour = rainVolumePastHour;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public JSONObject getRecommendation() {
+        return recommendation;
+    }
+
+    public String[] getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(String[] accessories) {
+        this.accessories = accessories;
     }
 }
