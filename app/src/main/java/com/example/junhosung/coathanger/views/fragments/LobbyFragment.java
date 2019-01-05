@@ -30,10 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.junhosung.coathanger.R;
 import com.example.junhosung.coathanger.models.PollService;
 import com.example.junhosung.coathanger.models.Recommendation;
-import com.example.junhosung.coathanger.views.activities.LobbyActivity;
 import com.example.junhosung.coathanger.views.activities.RecommendationActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,11 +45,10 @@ import java.util.Locale;
 
 public class LobbyFragment extends Fragment {
 
-    private static final String ENDPOINT = "api.openweathermap.org/data/2.5/weather?";
     private static final String API_KEY = "aaf609fc3d376d2a8b80e53754b890ac";
 
     Recommendation recommendation = Recommendation.getInstance();
-    TextView cityText;
+    TextView txtCity;
     TextView txtTempMin;
     TextView txtTempMax;
     Button btnSeeOutfit;
@@ -79,7 +76,7 @@ public class LobbyFragment extends Fragment {
 
         txtTempMin = (TextView) view.findViewById(R.id.temperatureMinText);
         txtTempMax = (TextView) view.findViewById(R.id.txtTempMax);
-        cityText = (TextView) view.findViewById(R.id.cityText);
+        txtCity = (TextView) view.findViewById(R.id.cityText);
 
         find_weather(city);
 
@@ -106,9 +103,6 @@ public class LobbyFragment extends Fragment {
                 .appendQueryParameter("appid",API_KEY)
                 .appendQueryParameter("units","metric");
         String url = builder.build().toString();
-
-        //Log.i("URL",url);
-        //String tempUrl = "http://api.openweathermap.org/data/2.5/weather?id=6173331&appid=aaf609fc3d376d2a8b80e53754b890ac&units=metric";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -138,7 +132,7 @@ public class LobbyFragment extends Fragment {
                         rainVolumePastHour = 0.0;
                     }
 
-                    cityText.setText(cityName);
+                    txtCity.setText(cityName);
                     txtTempMax.setText(String.valueOf(temperature_max)+"°");
                     txtTempMin.setText(String.valueOf(temperature_min)+"°");
 
@@ -146,11 +140,14 @@ public class LobbyFragment extends Fragment {
                     recommendation.setTemperature(temperature);
                     recommendation.setRainVolumePastHour(rainVolumePastHour);
 
-                    recommendation.set_outfit_from_weather();
+//                    Log.d("hats size",""+recommendation.getHats().size());
+//                    Log.d("outerwares size",""+recommendation.getOuterwares().size());
+//                    Log.d("tops size",""+recommendation.getTops().size());
+//                    Log.d("pants size",""+recommendation.getPants().size());
+//                    Log.d("shoes size",""+recommendation.getShoes().size());
+//                    Log.d("accessories size",""+recommendation.getAccessories().size());
 
-//                    Toast.makeText(getActivity(),
-//                            " "+cityName+" "+windSpeed+" "+rainVolumePastHour+" "+temperature_max+temperature_min,
-//                            Toast.LENGTH_LONG).show();
+                    recommendation.set_outfit_from_weather();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

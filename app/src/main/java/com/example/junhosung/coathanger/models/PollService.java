@@ -30,7 +30,7 @@ public class PollService extends IntentService {
 
     private static final String TAG = "PollService";
     public static final String CHANNEL_ID = "channelOne";
-    private static final int POLL_INTERVAL = 1000*60*60*2; // every 2 hours
+    //private static final int POLL_INTERVAL = 1000*60*60*2; // every 2 hours
     private static final int hour = 8;
     private static final int minute = 30;
 

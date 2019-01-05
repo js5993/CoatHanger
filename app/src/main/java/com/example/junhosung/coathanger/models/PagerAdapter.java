@@ -13,7 +13,7 @@ import com.example.junhosung.coathanger.views.fragments.MaleRecommendationFragme
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    int tabNumber;
+    private int tabNumber;
     public PagerAdapter(FragmentManager fragmentManager,int tabNumber) {
         super(fragmentManager);
         this.tabNumber = tabNumber;
@@ -38,5 +38,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return tabNumber;
+    }
+
+    public int getTabNumber() {
+        return tabNumber;
+    }
+
+    public void setTabNumber(int tabNumber) {
+        this.tabNumber = tabNumber;
     }
 }

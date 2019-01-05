@@ -18,7 +18,7 @@ import com.example.junhosung.coathanger.views.activities.LobbyActivity;
 
 public class WelcomeScreenFragment extends Fragment {
 
-    private static int displayTime = 2000; // 4 seconds
+    private static int displayTime = 1000;
     private Handler handler = new Handler();
 
     @Override

@@ -39,8 +39,16 @@ public class FemaleRecommendationFragment extends ListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        find_weather_and_set_outfit();
+        clothingList = new ArrayList<String>();
+        clothingList.add(mRecommendation.getOutfit().get(0).getName());
+        clothingList.add(mRecommendation.getOutfit().get(1).getName());
+        clothingList.add(mRecommendation.getOutfit().get(2).getName());
+        clothingList.add(mRecommendation.getOutfit().get(3).getName());
+        clothingList.add(mRecommendation.getOutfit().get(4).getName());
+        clothingList.add(mRecommendation.getOutfit().get(5).getName());
 
+        ClothingAdapter clothingAdapter = new ClothingAdapter(clothingList);
+        setListAdapter(clothingAdapter);
     }
 
     private class ClothingAdapter extends ArrayAdapter<String> {
@@ -64,68 +72,6 @@ public class FemaleRecommendationFragment extends ListFragment {
 
             return convertView;
         }
-    }
-
-    public void find_weather_and_set_outfit() {
-        String url = "http://api.openweathermap.org/data/2.5/weather?id=6173331&appid=aaf609fc3d376d2a8b80e53754b890ac&units=metric";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    JSONObject mainObject = response.getJSONObject("main");
-                    JSONObject windObject = response.getJSONObject("wind");
-
-                    Double temperature = mainObject.getDouble("temp");
-                    Double windSpeed = windObject.getDouble("speed");
-                    Double rainVolumePastHour;
-
-                    // if there is no rain, then the "rain" field key not be in the JSONObject response, so should check
-
-                    if (response.has("rain")) {
-                        JSONObject rainObject = response.getJSONObject("rain");
-                        if (rainObject.has("1h")) {
-                            rainVolumePastHour = rainObject.getDouble("1h");
-                        } else {
-                            rainVolumePastHour = 0.0;
-                        }
-                    } else {
-                        rainVolumePastHour = 0.0;
-                    }
-
-                    mRecommendation.setWindSpeed(windSpeed);
-                    mRecommendation.setTemperature(temperature);
-                    mRecommendation.setRainVolumePastHour(rainVolumePastHour);
-
-                    mRecommendation.set_outfit_from_weather();
-
-                    clothingList = new ArrayList<String>();
-                    clothingList.add(mRecommendation.hat);
-                    clothingList.add(mRecommendation.outerware);
-                    clothingList.add(mRecommendation.top);
-                    clothingList.add(mRecommendation.pant);
-                    clothingList.add(mRecommendation.shoe);
-                    clothingList.add(mRecommendation.accessory);
-
-                    ClothingAdapter clothingAdapter = new ClothingAdapter(clothingList);
-                    setListAdapter(clothingAdapter);
-
-                    Toast.makeText(getActivity(),""+temperature+windSpeed+rainVolumePastHour,Toast.LENGTH_LONG).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"something is wrong with request...",Toast.LENGTH_LONG).show();
-            }
-        }
-        );
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(jsonObjectRequest);
     }
 
 }

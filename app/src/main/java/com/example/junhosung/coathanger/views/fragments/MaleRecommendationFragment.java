@@ -1,15 +1,10 @@
 package com.example.junhosung.coathanger.views.fragments;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,19 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.junhosung.coathanger.R;
 import com.example.junhosung.coathanger.models.Recommendation;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -40,12 +24,32 @@ import java.util.ArrayList;
 public class MaleRecommendationFragment extends android.support.v4.app.ListFragment {
     Recommendation mRecommendation = Recommendation.getInstance();
     private ArrayList<String> clothingList;
+    private ArrayList<String> clothingImgIdList;
     String TAG = "TAG";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        find_weather_and_set_outfit();
+
+        clothingList = new ArrayList<String>();
+        clothingList.add(mRecommendation.getOutfit().get(0).getName());
+        clothingList.add(mRecommendation.getOutfit().get(1).getName());
+        clothingList.add(mRecommendation.getOutfit().get(2).getName());
+        clothingList.add(mRecommendation.getOutfit().get(3).getName());
+        clothingList.add(mRecommendation.getOutfit().get(4).getName());
+        clothingList.add(mRecommendation.getOutfit().get(5).getName());
+
+        clothingImgIdList = new ArrayList<>();
+        clothingImgIdList.add(mRecommendation.getOutfit().get(0).getImgId());
+        clothingImgIdList.add(mRecommendation.getOutfit().get(1).getImgId());
+        clothingImgIdList.add(mRecommendation.getOutfit().get(2).getImgId());
+        clothingImgIdList.add(mRecommendation.getOutfit().get(3).getImgId());
+        clothingImgIdList.add(mRecommendation.getOutfit().get(4).getImgId());
+        clothingImgIdList.add(mRecommendation.getOutfit().get(5).getImgId());
+
+        ClothingAdapter clothingAdapter = new ClothingAdapter(clothingList);
+        setListAdapter(clothingAdapter);
+
     }
 
     @Override
@@ -70,8 +74,9 @@ public class MaleRecommendationFragment extends android.support.v4.app.ListFragm
             TextView clothingName = (TextView) convertView.findViewById(R.id.clothingName);
             clothingName.setText(clothing);
 
+            int imageResource = getResources().getIdentifier(clothingImgIdList.get(position),"drawable",getActivity().getPackageName());
             ImageView imgClothing = (ImageView) convertView.findViewById(R.id.imgClothing);
-            imgClothing.setImageResource(R.drawable.trench_coat);
+            imgClothing.setImageResource(imageResource);
 
             Button btnBuyClothing = (Button) convertView.findViewById(R.id.btnBuyClothing);
             btnBuyClothing.setOnClickListener(new View.OnClickListener() {
@@ -85,73 +90,6 @@ public class MaleRecommendationFragment extends android.support.v4.app.ListFragm
 
             return convertView;
         }
-    }
-
-    public void find_weather_and_set_outfit() {
-        String url = "http://api.openweathermap.org/data/2.5/weather?id=6173331&appid=aaf609fc3d376d2a8b80e53754b890ac&units=metric";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    JSONObject mainObject = response.getJSONObject("main");
-                    JSONObject windObject = response.getJSONObject("wind");
-
-                    Double temperature = mainObject.getDouble("temp");
-                    Double windSpeed = windObject.getDouble("speed");
-                    Double rainVolumePastHour;
-
-                    // if there is no rain, then the "rain" field key not be in the JSONObject response, so should check
-
-                    if (response.has("rain")) {
-                        JSONObject rainObject = response.getJSONObject("rain");
-                        if (rainObject.has("1h")) {
-                            rainVolumePastHour = rainObject.getDouble("1h");
-                        } else {
-                            rainVolumePastHour = 0.0;
-                        }
-                    } else {
-                        rainVolumePastHour = 0.0;
-                    }
-
-                    mRecommendation.setWindSpeed(windSpeed);
-                    mRecommendation.setTemperature(temperature);
-                    mRecommendation.setRainVolumePastHour(rainVolumePastHour);
-
-                    Log.i("checking values","windSpeed:"+mRecommendation.windSpeed
-                            +"temperature: "+mRecommendation.temperature+"rain: "+mRecommendation.rainVolumePastHour);
-                    Log.i("checking values"," "+mRecommendation.hat+" "+mRecommendation.pant);
-
-                    mRecommendation.set_outfit_from_weather();
-
-                    Log.i("checking values"," "+mRecommendation.hat+" "+mRecommendation.pant);
-
-                    clothingList = new ArrayList<String>();
-                    clothingList.add(mRecommendation.hat);
-                    clothingList.add(mRecommendation.outerware);
-                    clothingList.add(mRecommendation.top);
-                    clothingList.add(mRecommendation.pant);
-                    clothingList.add(mRecommendation.shoe);
-                    clothingList.add(mRecommendation.accessory);
-
-                    ClothingAdapter clothingAdapter = new ClothingAdapter(clothingList);
-                    setListAdapter(clothingAdapter);
-
-                    Toast.makeText(getActivity(),""+temperature+windSpeed+rainVolumePastHour,Toast.LENGTH_LONG).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"something is wrong with request...",Toast.LENGTH_LONG).show();
-            }
-        }
-        );
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(jsonObjectRequest);
     }
 
 }
