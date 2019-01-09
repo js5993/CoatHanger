@@ -30,9 +30,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return femaleRecommendationFragment;
             default:
                 return null;
-
         }
-
     }
 
     @Override

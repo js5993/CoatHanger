@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class ClothingLibrary {
 
+    // class to hold the clothing items by category
+
     private ArrayList<ClothingItem> outerwares = new ArrayList<>();
     private ArrayList<ClothingItem> pants = new ArrayList<>();
     private ArrayList<ClothingItem> shoes = new ArrayList<>();

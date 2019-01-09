@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 
 public class MaleRecommendationFragment extends android.support.v4.app.ListFragment {
+
     Recommendation mRecommendation = Recommendation.getInstance();
     private ArrayList<String> clothingList;
     private ArrayList<String> clothingImgIdList;

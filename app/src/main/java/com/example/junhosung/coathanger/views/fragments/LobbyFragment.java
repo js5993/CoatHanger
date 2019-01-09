@@ -47,11 +47,11 @@ public class LobbyFragment extends Fragment {
 
     private static final String API_KEY = "aaf609fc3d376d2a8b80e53754b890ac";
 
-    Recommendation recommendation = Recommendation.getInstance();
-    TextView txtCity;
-    TextView txtTempMin;
-    TextView txtTempMax;
-    Button btnSeeOutfit;
+    Recommendation mRecommendation = Recommendation.getInstance();
+    TextView mTxtCity;
+    TextView mTxtTempMin;
+    TextView mTxtTempMax;
+    Button mBtnSeeOutfit;
     String city;
 
     @Override
@@ -74,14 +74,14 @@ public class LobbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lobby,container,false);
 
-        txtTempMin = (TextView) view.findViewById(R.id.temperatureMinText);
-        txtTempMax = (TextView) view.findViewById(R.id.txtTempMax);
-        txtCity = (TextView) view.findViewById(R.id.cityText);
+        mTxtTempMin = (TextView) view.findViewById(R.id.temperatureMinText);
+        mTxtTempMax = (TextView) view.findViewById(R.id.txtTempMax);
+        mTxtCity = (TextView) view.findViewById(R.id.cityText);
 
         find_weather(city);
 
-        btnSeeOutfit = (Button) view.findViewById(R.id.btnSeeOutfit);
-        btnSeeOutfit.setOnClickListener(new View.OnClickListener() {
+        mBtnSeeOutfit = (Button) view.findViewById(R.id.btnSeeOutfit);
+        mBtnSeeOutfit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),RecommendationActivity.class);
@@ -132,22 +132,22 @@ public class LobbyFragment extends Fragment {
                         rainVolumePastHour = 0.0;
                     }
 
-                    txtCity.setText(cityName);
-                    txtTempMax.setText(String.valueOf(temperature_max)+"°");
-                    txtTempMin.setText(String.valueOf(temperature_min)+"°");
+                    mTxtCity.setText(cityName);
+                    mTxtTempMax.setText(String.valueOf(temperature_max)+"°");
+                    mTxtTempMin.setText(String.valueOf(temperature_min)+"°");
 
-                    recommendation.setWindSpeed(windSpeed);
-                    recommendation.setTemperature(temperature);
-                    recommendation.setRainVolumePastHour(rainVolumePastHour);
+                    mRecommendation.setWindSpeed(windSpeed);
+                    mRecommendation.setTemperature(temperature);
+                    mRecommendation.setRainVolumePastHour(rainVolumePastHour);
 
-//                    Log.d("hats size",""+recommendation.getHats().size());
-//                    Log.d("outerwares size",""+recommendation.getOuterwares().size());
-//                    Log.d("tops size",""+recommendation.getTops().size());
-//                    Log.d("pants size",""+recommendation.getPants().size());
-//                    Log.d("shoes size",""+recommendation.getShoes().size());
-//                    Log.d("accessories size",""+recommendation.getAccessories().size());
+                    mRecommendation.set_outfit_from_weather();
 
-                    recommendation.set_outfit_from_weather();
+                    Log.d("test",mRecommendation.getOutfit().get(0).getName());
+                    Log.d("test",mRecommendation.getOutfit().get(1).getName());
+                    Log.d("test",mRecommendation.getOutfit().get(2).getName());
+                    Log.d("test",mRecommendation.getOutfit().get(3).getName());
+                    Log.d("test",mRecommendation.getOutfit().get(4).getName());
+                    Log.d("test",mRecommendation.getOutfit().get(5).getName());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
