@@ -43,9 +43,8 @@ public class LobbyFragmentUITest {
 
     @Test
     public void clickSeeOutfit() throws Exception {
-        Espresso.onView(withId(R.id.btnSeeOutfit)).perform(click());
+        Espresso.onView(withId(R.id.btn_see_outfit)).perform(click());
         intended(hasComponent(RecommendationActivity.class.getName()));
     }
-
 
 }

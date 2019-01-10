@@ -51,6 +51,7 @@ public class LobbyFragment extends Fragment {
     TextView mTxtCity;
     TextView mTxtTempMin;
     TextView mTxtTempMax;
+    TextView mTxtTempMain;
     Button mBtnSeeOutfit;
     String city;
 
@@ -74,13 +75,14 @@ public class LobbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lobby,container,false);
 
-        mTxtTempMin = (TextView) view.findViewById(R.id.temperatureMinText);
-        mTxtTempMax = (TextView) view.findViewById(R.id.txtTempMax);
-        mTxtCity = (TextView) view.findViewById(R.id.cityText);
+        mTxtTempMin = (TextView) view.findViewById(R.id.txtView_min_temp);
+        mTxtTempMax = (TextView) view.findViewById(R.id.txtView_max_temp);
+        mTxtCity = (TextView) view.findViewById(R.id.txtView_city_name);
+        mTxtTempMain = (TextView) view.findViewById(R.id.txtView_main_temp);
 
-        find_weather(city);
+        find_weather_and_set_recommendation(city);
 
-        mBtnSeeOutfit = (Button) view.findViewById(R.id.btnSeeOutfit);
+        mBtnSeeOutfit = (Button) view.findViewById(R.id.btn_see_outfit);
         mBtnSeeOutfit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +94,24 @@ public class LobbyFragment extends Fragment {
         return view;
     }
 
-    public void find_weather(String city) {
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},1000);
+        } else {
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            city = findCity(location.getLatitude(),location.getLongitude());
+        }
+
+        find_weather_and_set_recommendation(city);
+
+    }
+
+    public void find_weather_and_set_recommendation(String city) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
                 .authority("api.openweathermap.org")
@@ -112,7 +131,7 @@ public class LobbyFragment extends Fragment {
                     JSONObject mainObject = response.getJSONObject("main");
                     JSONObject windObject = response.getJSONObject("wind");
 
-                    Double temperature = mainObject.getDouble("temp");
+                    Double temperature_main = mainObject.getDouble("temp");
                     Double temperature_min = mainObject.getDouble("temp_min");
                     Double temperature_max = mainObject.getDouble("temp_max");
                     Double windSpeed = windObject.getDouble("speed");
@@ -133,11 +152,13 @@ public class LobbyFragment extends Fragment {
                     }
 
                     mTxtCity.setText(cityName);
-                    mTxtTempMax.setText(String.valueOf(temperature_max)+"°");
-                    mTxtTempMin.setText(String.valueOf(temperature_min)+"°");
+                    mTxtTempMax.setText(String.valueOf(temperature_max.intValue())+"°C");
+                    mTxtTempMin.setText(String.valueOf(temperature_min.intValue())+"°C");
+                    mTxtTempMain.setText(String.valueOf(temperature_main.intValue())+"°C");
+
 
                     mRecommendation.setWindSpeed(windSpeed);
-                    mRecommendation.setTemperature(temperature);
+                    mRecommendation.setTemperature(temperature_main);
                     mRecommendation.setRainVolumePastHour(rainVolumePastHour);
 
                     mRecommendation.set_outfit_from_weather();

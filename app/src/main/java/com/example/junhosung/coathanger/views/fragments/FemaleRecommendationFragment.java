@@ -79,8 +79,10 @@ public class FemaleRecommendationFragment extends ListFragment {
             }
 
             String clothing = getItem(position);
+            String path = "https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=";
+            final Uri clothingUri = Uri.parse(path+clothing);
 
-            TextView clothingName = (TextView) convertView.findViewById(R.id.clothingName);
+            final TextView clothingName = (TextView) convertView.findViewById(R.id.clothingName);
             clothingName.setText(clothing);
 
             int imageResource = getResources().getIdentifier(clothingImgIdList.get(position),"drawable",getActivity().getPackageName());
@@ -91,7 +93,8 @@ public class FemaleRecommendationFragment extends ListFragment {
             btnBuyClothing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Uri clothingUri = Uri.parse("https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=trench+coat&rh=i%3Aaps%2Ck%3Atrench+coat");
+
+                    //Uri clothingUri = Uri.parse("https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=trench+coat&rh=i%3Aaps%2Ck%3Atrench+coat");
                     Intent intent = new Intent(Intent.ACTION_VIEW,clothingUri);
                     startActivity(intent);
                 }
